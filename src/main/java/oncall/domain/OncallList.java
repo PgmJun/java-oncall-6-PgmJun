@@ -57,24 +57,24 @@ public class OncallList {
 
     private void addWeekdayWorker(Stack<Worker> workers) {
         Worker todayWorker = weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex);
-        changeWeekdayWorkSequenceIfWorkerWorkContinuous(workers, todayWorker, weekdayWorkerIndex);
+        changeWeekdayWorkSequenceIfWorkerWorkContinuously(workers, todayWorker, weekdayWorkerIndex);
         workers.push(weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex++));
     }
 
     private void addHolidayOrWeekendWorker(Stack<Worker> workers) {
         Worker todayWorker = weekendWorkers.getWorkerByIndex(weekendWorkerIndex);
-        //전날 근무자가 본인이면 다음날 주말 근무자와 순서 변경
-        changeWeekendWorkSequenceIfWorkerWorkContinuous(workers, todayWorker, weekendWorkerIndex);
+
+        changeHolidayOrWeekendWorkSequenceIfWorkerWorkContinuously(workers, todayWorker, weekendWorkerIndex);
         workers.push(weekendWorkers.getWorkerByIndex(weekendWorkerIndex++));
     }
 
-    private void changeWeekdayWorkSequenceIfWorkerWorkContinuous(Stack<Worker> workers, Worker todayWorker, int weekdayWorkerIndex) {
+    private void changeWeekdayWorkSequenceIfWorkerWorkContinuously(Stack<Worker> workers, Worker todayWorker, int weekdayWorkerIndex) {
         if (workers.peek().getName().equals(todayWorker.getName())) {
             changeWeekdayWorkerSequence(weekdayWorkerIndex);
         }
     }
 
-    private void changeWeekendWorkSequenceIfWorkerWorkContinuous(Stack<Worker> workers, Worker todayWorker, int weekendWorkerIndex) {
+    private void changeHolidayOrWeekendWorkSequenceIfWorkerWorkContinuously(Stack<Worker> workers, Worker todayWorker, int weekendWorkerIndex) {
         if (workers.peek().getName().equals(todayWorker.getName())) {
             changeWeekendWorkerSequence(weekendWorkerIndex);
         }

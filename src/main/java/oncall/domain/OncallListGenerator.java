@@ -21,7 +21,7 @@ public class OncallListGenerator {
         OncallWorkers oncallWorkers = inputOncallWorkers();
         OncallList oncallList = new OncallList(oncallDate, oncallWorkers);
 
-        Stack<Worker> workSequence = oncallList.getWorkSequence();
+        List<Worker> workSequence = oncallList.getWorkSequence();
         outputView.printOncallList(workSequence, oncallDate);
     }
 

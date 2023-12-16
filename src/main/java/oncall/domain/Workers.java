@@ -39,6 +39,10 @@ public class Workers {
         return workers.get(index);
     }
 
+    public String getNameByIndex(int index) {
+        return workers.get(index).getName();
+    }
+
     public void changeSequence(int i1, int i2) {
         Worker worker1 = new Worker(workers.get(i1).getName());
         Worker worker2 = new Worker(workers.get(i2).getName());

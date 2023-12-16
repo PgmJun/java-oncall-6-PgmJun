@@ -8,7 +8,6 @@ public class OncallDate {
     private final int month;
     private final String dayOfWeek;
 
-    private final static List<String> dayOfWeeks = List.of("월", "화", "수", "목", "금", "토", "일");
     private final static List<Integer> dates = List.of(0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
     private final static List<List<Integer>> holyDays = List.of(List.of(), List.of(1), List.of(), List.of(1), List.of(),
             List.of(5), List.of(6), List.of(), List.of(15), List.of(), List.of(3, 9), List.of(), List.of(25));
@@ -30,11 +29,7 @@ public class OncallDate {
     }
 
     private static void validateDayOfWeek(OncallDateDto dto) {
-        Optional<String> matchedMonth = dayOfWeeks.stream()
-                .filter(month -> month.equals(dto.getDayOfWeek()))
-                .findFirst();
-
-        if (matchedMonth.isEmpty()) {
+        if (!DayOfWeek.isPresent(dto.getDayOfWeek())) {
             throw new IllegalArgumentException("요일은 월,화,수,목,금,토,일 중 하나만 입력 가능합니다.");
         }
     }
@@ -66,6 +61,6 @@ public class OncallDate {
     }
 
     public int calculateDayOfWeekIndex(int date) {
-        return (dayOfWeeks.indexOf(dayOfWeek) + (date - 1)) % WEEK_SIZE;
+        return (DayOfWeek.findCodeByName(dayOfWeek) + (date - 1)) % WEEK_SIZE;
     }
 }

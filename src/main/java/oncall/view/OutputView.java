@@ -1,6 +1,7 @@
 package oncall.view;
 
 import java.util.List;
+import oncall.domain.DayOfWeek;
 import oncall.domain.OncallDate;
 import oncall.domain.Worker;
 
@@ -27,20 +28,7 @@ public class OutputView {
         }
     }
 
-    private String checkDayOfWeekString(int dayOfWeekIndex) {
-        if (dayOfWeekIndex == 0) {
-            return "월";
-        } else if (dayOfWeekIndex == 1) {
-            return "화";
-        } else if (dayOfWeekIndex == 2) {
-            return "수";
-        } else if (dayOfWeekIndex == 3) {
-            return "목";
-        } else if (dayOfWeekIndex == 4) {
-            return "금";
-        } else if (dayOfWeekIndex == 5) {
-            return "토";
-        }
-        return "일";
+    private String checkDayOfWeekString(int dayOfWeekCode) {
+        return DayOfWeek.getNameByCode(dayOfWeekCode);
     }
 }

@@ -1,6 +1,7 @@
 package oncall.domain;
 
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -19,7 +20,7 @@ public class OncallListGenerator {
         OncallDate oncallDate = inputOncallDate();
         OncallWorkers oncallWorkers = inputOncallWorkers();
         OncallList oncallList = new OncallList(oncallDate, oncallWorkers);
-        List<Worker> workSequence = oncallList.getWorkSequence();
+        Stack<Worker> workSequence = oncallList.getWorkSequence();
         outputView.printOncallList(workSequence, oncallDate);
     }
 

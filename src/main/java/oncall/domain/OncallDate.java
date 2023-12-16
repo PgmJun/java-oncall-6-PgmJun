@@ -56,12 +56,16 @@ public class OncallDate {
         return dayOfWeeks.indexOf(dayOfWeek);
     }
 
-    public boolean isHolyDay(int month, int date) {
+    public boolean isHolyDayOrWeekend(int month, int date) {
         int dayOfWeekIndex = calculateDayOfWeekIndex(date);
         if (holyDays.get(month).contains(date) || (dayOfWeekIndex > 4)) {
             return true;
         }
         return false;
+    }
+
+    public boolean isHolyDay(int month, int date) {
+        return holyDays.get(month).contains(date);
     }
 
     public int calculateDayOfWeekIndex(int date) {

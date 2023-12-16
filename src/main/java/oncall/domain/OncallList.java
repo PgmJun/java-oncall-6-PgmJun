@@ -15,53 +15,64 @@ public class OncallList {
     }
 
     //TODO : 재검토
-    public List<Worker> getWorkSequence() {
-        List<Worker> workers = new Stack<>();
-        int month = oncallDate.getMonth();
+    public Stack<Worker> getWorkSequence() {
+        Stack<Worker> workers = new Stack<>();
         int weekendWorkerIndex = 0;
         int weekdayWorkerIndex = 0;
-        for (int date = 1; date <= oncallDate.dateOfMonth(); date++) {
-            Worker todayWorker = null;
-            if(weekendWorkerIndex % weekendWorkers.getWorkers().size() == 0) {
-                weekendWorkerIndex = 0;
-            }
+        //첫 근무자 정보 입력
+        if (oncallDate.isHolyDayOrWeekend(oncallDate.getMonth(), 1)) {
+            workers.push(weekendWorkers.getWorkerByIndex(weekendWorkerIndex++));
+        } else if (!oncallDate.isHolyDayOrWeekend(oncallDate.getMonth(), 1)) {
+            workers.push(weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex++));
+        }
+
+        // 근무자 정보 입력
+        int month = oncallDate.getMonth();
+        for (int date = 2; date <= oncallDate.dateOfMonth(); date++) {
             if(weekdayWorkerIndex % weekdayWorkers.getWorkers().size() == 0) {
                 weekdayWorkerIndex = 0;
             }
-            boolean isHolyDay = oncallDate.isHolyDay(month, date);
-
-            if (isHolyDay) {
-                todayWorker = weekendWorkers.getWorkerByIndex(weekendWorkerIndex++);
-            } else if(!isHolyDay) {
-                todayWorker = weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex++);
+            if(weekendWorkerIndex % weekendWorkers.getWorkers().size() == 0) {
+                weekendWorkerIndex = 0;
             }
-
-            if (workers.isEmpty()) {
-                workers.add(todayWorker);
+            //주말의 경우
+            if (oncallDate.isHolyDayOrWeekend(month, date)) {
+                //주말 현재 순서의 근무자 정보 조회
+                Worker todayWorker = weekendWorkers.getWorkerByIndex(weekendWorkerIndex);
+                //전날 근무자가 본인이면
+                if (workers.peek().getName().equals(todayWorker.getName())) {
+                    //다음날 주말 근무자와 순서 변경
+                    changeWeekendWorkerSequence(weekendWorkerIndex);
+                }
+                workers.push(weekendWorkers.getWorkerByIndex(weekendWorkerIndex));
+                //근무 순서 +1
+                weekendWorkerIndex+=1;
                 continue;
             }
-            checkWorkContinuous(workers, todayWorker, isHolyDay, weekendWorkerIndex, weekdayWorkerIndex);
-            if (isHolyDay) {
-                todayWorker = weekendWorkers.getWorkerByIndex(weekendWorkerIndex - 1);
-                workers.add(todayWorker);
-                continue;
+            //평일의 경우
+            Worker todayWorker = weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex);
+            //전날 근무자가 본인이면
+            if (workers.peek().getName().equals(todayWorker.getName())) {
+                //다음날 평일 근무자와 순서 변경
+                changeWeekdayWorkerSequence(weekdayWorkerIndex);
             }
-            todayWorker = weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex - 1);
-            workers.add(todayWorker);
+            workers.push(weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex));
+            weekdayWorkerIndex+=1;
         }
 
         return workers;
     }
 
-    private void checkWorkContinuous(List<Worker> workers, Worker todayWorker, boolean isHolyDay,
-                                     int weekendWorkerIndex,
-                                     int weekdayWorkerIndex) {
-        if (workers.get(workers.size() - 1).getName().equals(todayWorker.getName())) {
-            if (isHolyDay) {
-                weekendWorkers.changeSequence(weekendWorkerIndex - 1, weekendWorkerIndex);
-                return;
-            }
-            weekdayWorkers.changeSequence(weekdayWorkerIndex - 1, weekdayWorkerIndex);
-        }
+    private void changeWeekdayWorkerSequence(int weekdayWorkerIndex) {
+        weekdayWorkers.changeSequence(weekdayWorkerIndex, weekdayWorkerIndex + 1);
+    }
+
+    private void changeWeekendWorkerSequence(int weekendWorkerIndex) {
+        weekendWorkers.changeSequence(weekendWorkerIndex, weekendWorkerIndex + 1);
+    }
+
+    private boolean isWorkContinuous(List<Worker> workers, Worker todayWorker) {
+        return workers.get(workers.size() - 1).getName().equals(todayWorker.getName());
+
     }
 }

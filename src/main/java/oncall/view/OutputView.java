@@ -13,7 +13,7 @@ public class OutputView {
 
     public void printOncallList(List<Worker> workSequence, OncallDate oncallDate) {
         System.out.println();
-        
+
         int month = oncallDate.getMonth();
         for(int i = 1; i <= oncallDate.dateOfMonth(); i++) {
             if(oncallDate.isHolyDay(month, i)) {

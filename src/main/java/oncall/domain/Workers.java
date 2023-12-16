@@ -41,8 +41,9 @@ public class Workers {
     }
 
     public void changeSequence(int i1, int i2) {
-        Worker worker1 = workers.get(i1);
-        workers.add(i1, workers.get(i2));
-        workers.add(i2, worker1);
+        Worker worker1 = new Worker(workers.get(i1).getName());
+        Worker worker2 = new Worker(workers.get(i2).getName());
+        workers.set(i1, worker2);
+        workers.set(i2, worker1);
     }
 }

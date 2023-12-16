@@ -44,10 +44,6 @@ public class OncallDate {
         return month;
     }
 
-    public String getDayOfWeek() {
-        return dayOfWeek;
-    }
-
     public int dateOfMonth() {
         return dates.get(month);
     }

@@ -1,7 +1,6 @@
 package oncall.domain;
 
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -19,17 +18,17 @@ public class OncallListGenerator {
     public void start() {
         OncallDate oncallDate = inputOncallDate();
         OncallWorkers oncallWorkers = inputOncallWorkers();
-        OncallList oncallList = new OncallList(oncallDate, oncallWorkers);
+        OncallInfo oncallInfo = OncallInfo.ofDateAndWorkers(oncallDate, oncallWorkers);
 
-        List<Worker> workSequence = oncallList.getWorkSequence();
+        List<Worker> workSequence = oncallInfo.getWorkSequence();
         outputView.printOncallList(workSequence, oncallDate);
     }
 
     private OncallWorkers inputOncallWorkers() {
         while (true) {
             try {
-                Workers weekdayWorkers = new Workers(inputWeekdayWorkerInfos());
-                Workers weekendWorkers = new Workers(inputWeekendWorkerInfos());
+                Workers weekdayWorkers = Workers.from(inputWeekdayWorkerInfos());
+                Workers weekendWorkers = Workers.from(inputWeekendWorkerInfos());
                 return new OncallWorkers(weekdayWorkers, weekendWorkers);
             } catch (IllegalArgumentException exception) {
                 outputView.printErrorMessage(exception);

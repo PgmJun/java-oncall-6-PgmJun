@@ -6,11 +6,15 @@ public class Workers {
     private List<Worker> workers;
 
     public Workers(List<Worker> workers) {
-        validate(workers);
         this.workers = workers;
     }
 
-    private void validate(List<Worker> workers) {
+    public static Workers from(List<Worker> workers) {
+        validate(workers);
+        return new Workers(workers);
+    }
+
+    private static void validate(List<Worker> workers) {
         validateWorkerNameDuplication(workers);
         validateWorkersSize(workers);
     }
@@ -21,7 +25,7 @@ public class Workers {
         }
     }
 
-    private void validateWorkerNameDuplication(List<Worker> workers) {
+    private static void validateWorkerNameDuplication(List<Worker> workers) {
         long distinctWorkersNameCount = workers.stream()
                 .map(Worker::getName)
                 .distinct()
@@ -37,10 +41,6 @@ public class Workers {
 
     public Worker getWorkerByIndex(int index) {
         return workers.get(index);
-    }
-
-    public String getNameByIndex(int index) {
-        return workers.get(index).getName();
     }
 
     public void changeSequence(int i1, int i2) {

@@ -2,18 +2,22 @@ package oncall.domain;
 
 import java.util.Stack;
 
-public class OncallList {
+public class OncallInfo {
     private final OncallDate oncallDate;
     private final Workers weekdayWorkers;
     private final Workers weekendWorkers;
     private int weekendWorkerIndex;
     private int weekdayWorkerIndex;
 
-    public OncallList(OncallDate oncallDate, OncallWorkers oncallWorkers) {
+    private OncallInfo(OncallDate oncallDate, Workers weekdayWorkers, Workers weekendWorkers) {
         this.oncallDate = oncallDate;
-        this.weekdayWorkers = oncallWorkers.getWeekdayWorkers();
-        this.weekendWorkers = oncallWorkers.getWeekendWorkers();
+        this.weekdayWorkers = weekdayWorkers;
+        this.weekendWorkers = weekendWorkers;
         resetWorkerIndex();
+    }
+
+    public static OncallInfo ofDateAndWorkers(OncallDate oncallDate, OncallWorkers oncallWorkers) {
+        return new OncallInfo(oncallDate, oncallWorkers.getWeekdayWorkers(), oncallWorkers.getWeekendWorkers());
     }
 
     public Stack<Worker> getWorkSequence() {

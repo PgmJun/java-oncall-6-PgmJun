@@ -1,15 +1,11 @@
 package oncall.domain;
 
-import java.util.List;
 import oncall.view.dto.OncallDateDto;
 
 public class OncallDate {
     private final int month;
     private final String dayOfWeek;
 
-    private final static List<Integer> dates = List.of(0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-    private final static List<List<Integer>> holidays = List.of(List.of(), List.of(1), List.of(), List.of(1), List.of(),
-            List.of(5), List.of(6), List.of(), List.of(15), List.of(), List.of(3, 9), List.of(), List.of(25));
     private final static int MIN_MONTH = 1;
     private final static int MAX_MONTH = 12;
     private final static int FRIDAY_INDEX = 4;
@@ -44,7 +40,7 @@ public class OncallDate {
     }
 
     public int dateOfMonth() {
-        return dates.get(month);
+        return Month.getNumberByMonth(month);
     }
 
     public boolean isHolidayOrWeekend(int month, int date) {
@@ -56,7 +52,7 @@ public class OncallDate {
     }
 
     public boolean isHoliday(int month, int date) {
-        return holidays.get(month).contains(date);
+        return Month.isHoliday(month, date);
     }
 
     public int calculateDayOfWeekIndex(int date) {

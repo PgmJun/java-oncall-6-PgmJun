@@ -31,4 +31,12 @@ public class OncallWorkers {
             throw new IllegalArgumentException("평일 근무자와 휴일 근무자의 수가 다릅니다.");
         }
     }
+
+    public Workers getWeekdayWorkers() {
+        return weekdayWorkers;
+    }
+
+    public Workers getWeekendWorkers() {
+        return weekendWorkers;
+    }
 }

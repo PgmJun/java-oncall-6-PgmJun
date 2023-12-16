@@ -3,6 +3,7 @@ package oncall.view;
 import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import oncall.view.dto.OncallDateDto;
 import oncall.view.validator.InputValidator;
 
@@ -25,12 +26,12 @@ public class InputView {
     public List<String> readWeekdayWorkers() {
         System.out.print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ");
         return Arrays.stream(Console.readLine().split(","))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public List<String> readWeekendWorkers() {
         System.out.print("휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ");
         return Arrays.stream(Console.readLine().split(","))
-                .toList();
+                .collect(Collectors.toList());
     }
 }

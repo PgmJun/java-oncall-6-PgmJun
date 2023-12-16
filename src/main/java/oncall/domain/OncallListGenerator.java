@@ -1,6 +1,7 @@
 package oncall.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import oncall.view.InputView;
 import oncall.view.OutputView;
 import oncall.view.dto.OncallDateDto;
@@ -16,8 +17,10 @@ public class OncallListGenerator {
 
     public void start() {
         OncallDate oncallDate = inputOncallDate();
-
         OncallWorkers oncallWorkers = inputOncallWorkers();
+        OncallList oncallList = new OncallList(oncallDate, oncallWorkers);
+        List<Worker> workSequence = oncallList.getWorkSequence();
+        System.out.println();
     }
 
     private OncallWorkers inputOncallWorkers() {
@@ -35,13 +38,13 @@ public class OncallListGenerator {
     private List<Worker> inputWeekdayWorkerInfos() {
         return inputView.readWeekdayWorkers().stream()
                 .map(Worker::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private List<Worker> inputWeekendWorkerInfos() {
         return inputView.readWeekendWorkers().stream()
                 .map(Worker::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private OncallDate inputOncallDate() {

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Workers {
-    private final List<Worker> workers;
+    private List<Worker> workers;
 
     public Workers(List<Worker> workers) {
         validate(workers);
@@ -33,10 +33,16 @@ public class Workers {
     }
 
     public List<Worker> getWorkers() {
-        return Collections.unmodifiableList(workers);
+        return workers;
     }
 
     public Worker getWorkerByIndex(int index) {
         return workers.get(index);
+    }
+
+    public void changeSequence(int i1, int i2) {
+        Worker worker1 = workers.get(i1);
+        workers.add(i1, workers.get(i2));
+        workers.add(i2, worker1);
     }
 }

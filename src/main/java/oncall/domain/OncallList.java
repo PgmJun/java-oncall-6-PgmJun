@@ -14,7 +14,6 @@ public class OncallList {
         this.weekendWorkers = oncallWorkers.getWeekendWorkers();
     }
 
-    //TODO : 재검토
     public Stack<Worker> getWorkSequence() {
         Stack<Worker> workers = new Stack<>();
         int weekendWorkerIndex = 0;
@@ -29,10 +28,10 @@ public class OncallList {
         // 근무자 정보 입력
         int month = oncallDate.getMonth();
         for (int date = 2; date <= oncallDate.dateOfMonth(); date++) {
-            if(weekdayWorkerIndex % weekdayWorkers.getWorkers().size() == 0) {
+            if (weekdayWorkerIndex % weekdayWorkers.getWorkers().size() == 0) {
                 weekdayWorkerIndex = 0;
             }
-            if(weekendWorkerIndex % weekendWorkers.getWorkers().size() == 0) {
+            if (weekendWorkerIndex % weekendWorkers.getWorkers().size() == 0) {
                 weekendWorkerIndex = 0;
             }
             //주말의 경우
@@ -46,7 +45,7 @@ public class OncallList {
                 }
                 workers.push(weekendWorkers.getWorkerByIndex(weekendWorkerIndex));
                 //근무 순서 +1
-                weekendWorkerIndex+=1;
+                weekendWorkerIndex += 1;
                 continue;
             }
             //평일의 경우
@@ -57,7 +56,7 @@ public class OncallList {
                 changeWeekdayWorkerSequence(weekdayWorkerIndex);
             }
             workers.push(weekdayWorkers.getWorkerByIndex(weekdayWorkerIndex));
-            weekdayWorkerIndex+=1;
+            weekdayWorkerIndex += 1;
         }
 
         return workers;

@@ -16,7 +16,7 @@ public class OncallWorkers {
     }
 
     private void validateIsWorkerWorkOneDay(Workers weekdayWorkers, Workers weekendWorkers) {
-        for(int i = 0; i < weekdayWorkers.getWorkers().size(); i++) {
+        for (int i = 0; i < weekdayWorkers.getWorkers().size(); i++) {
             String weekdayWorkerName = weekdayWorkers.getWorkerByIndex(i).getName();
             weekdayWorkers.getWorkers().stream()
                     .filter(worker -> worker.getName().equals(weekdayWorkerName))
@@ -27,7 +27,7 @@ public class OncallWorkers {
     }
 
     private void validateWorkersSize(Workers weekdayWorkers, Workers weekendWorkers) {
-        if(weekdayWorkers.getWorkers().size() != weekendWorkers.getWorkers().size()) {
+        if (weekdayWorkers.getWorkers().size() != weekendWorkers.getWorkers().size()) {
             throw new IllegalArgumentException("평일 근무자와 휴일 근무자의 수가 다릅니다.");
         }
     }

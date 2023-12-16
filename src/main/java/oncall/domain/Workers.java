@@ -1,6 +1,5 @@
 package oncall.domain;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Workers {
@@ -17,7 +16,7 @@ public class Workers {
     }
 
     private static void validateWorkersSize(List<Worker> workers) {
-        if(workers.size() < 5 || workers.size() > 35) {
+        if (workers.size() < 5 || workers.size() > 35) {
             throw new IllegalArgumentException("근무자는 5명 이상 35명 이하만 가능합니다.");
         }
     }
@@ -27,7 +26,7 @@ public class Workers {
                 .map(Worker::getName)
                 .distinct()
                 .count();
-        if(distinctWorkersNameCount != workers.size()) {
+        if (distinctWorkersNameCount != workers.size()) {
             throw new IllegalArgumentException("근무자의 이름은 중복될 수 없습니다.");
         }
     }

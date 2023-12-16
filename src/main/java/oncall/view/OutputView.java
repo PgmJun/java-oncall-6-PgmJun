@@ -17,7 +17,7 @@ public class OutputView {
 
         int month = oncallDate.getMonth();
         for (int i = 1; i <= oncallDate.dateOfMonth(); i++) {
-            if (oncallDate.isHolyDay(month, i)) {
+            if (oncallDate.isHoliday(month, i)) {
                 System.out.println(String.format("%d월 %d일 %s(휴일) %s", month, i,
                         checkDayOfWeekString(oncallDate.calculateDayOfWeekIndex(i)),
                         workSequence.get(i - 1).getName()));

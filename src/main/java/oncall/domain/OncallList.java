@@ -14,6 +14,7 @@ public class OncallList {
         this.weekendWorkers = oncallWorkers.getWeekendWorkers();
     }
 
+    //TODO : 재검토
     public List<Worker> getWorkSequence() {
         List<Worker> workers = new Stack<>();
         int month = oncallDate.getMonth();

@@ -20,7 +20,7 @@ public class OncallListGenerator {
         OncallWorkers oncallWorkers = inputOncallWorkers();
         OncallList oncallList = new OncallList(oncallDate, oncallWorkers);
         List<Worker> workSequence = oncallList.getWorkSequence();
-        System.out.println();
+        outputView.printOncallList(workSequence, oncallDate);
     }
 
     private OncallWorkers inputOncallWorkers() {

@@ -57,10 +57,14 @@ public class OncallDate {
     }
 
     public boolean isHolyDay(int month, int date) {
-        int dayOfWeekIndex = (dayOfWeeks.indexOf(dayOfWeek) + (date - 1)) % 7;
+        int dayOfWeekIndex = calculateDayOfWeekIndex(date);
         if (holyDays.get(month).contains(date) || (dayOfWeekIndex > 4)) {
             return true;
         }
         return false;
+    }
+
+    public int calculateDayOfWeekIndex(int date) {
+        return (dayOfWeeks.indexOf(dayOfWeek) + (date - 1)) % 7;
     }
 }

@@ -1,5 +1,6 @@
 package oncall.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import oncall.view.dto.OncallDateDto;
@@ -9,6 +10,9 @@ public class OncallDate {
     private final String dayOfWeek;
 
     private final static List<String> months = List.of("월", "화", "수", "목", "금", "토", "일");
+    private final static List<Integer> dates = List.of(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    private final static List<List<Integer>> holyDays = List.of(List.of(), List.of(1), List.of(), List.of(1), List.of(),
+            List.of(5), List.of(6), List.of(), List.of(15), List.of(), List.of(3, 9), List.of(), List.of(25));
 
     public OncallDate(OncallDateDto dto) {
         validate(dto);
@@ -26,13 +30,13 @@ public class OncallDate {
                 .filter(month -> month.equals(dto.getDayOfWeek()))
                 .findFirst();
 
-        if(matchedMonth.isEmpty()) {
+        if (matchedMonth.isEmpty()) {
             throw new IllegalArgumentException("요일은 월,화,수,목,금,토,일 중 하나만 입력 가능합니다.");
         }
     }
 
     private static void validateMonth(OncallDateDto dto) {
-        if(dto.getMonth() < 1 || dto.getMonth() > 12) {
+        if (dto.getMonth() < 1 || dto.getMonth() > 12) {
             throw new IllegalArgumentException("월은 1~12월만 입력할 수 있습니다.");
         }
     }

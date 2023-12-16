@@ -36,6 +36,7 @@ public enum DayOfWeek {
         return Arrays.stream(values())
                 .filter(d -> d.name.equals(name))
                 .findFirst()
-                .get().code;
+                .get()
+                .code;
     }
 }
